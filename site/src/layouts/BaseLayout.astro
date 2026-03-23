@@ -1,0 +1,108 @@
+---
+import '../styles/global.css'
+
+interface Props {
+  title: string
+  description?: string
+}
+const { title, description = 'Portfolio und Blog von Oliver – Fotograf aus Essen.' } = Astro.props
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={`${title} · Olis Lichtblicke`} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <title>{title} · Olis Lichtblicke</title>
+  </head>
+  <body>
+
+    <!-- Navigation -->
+    <nav class="nav" id="navbar">
+      <a href="/" class="nav-logo">
+        <img src="/logo.png" alt="Olis Lichtblicke" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <span style="display:none; font-family:'Cormorant Garamond',serif; font-size:1.35rem; font-weight:300; letter-spacing:0.04em;">Olis Lichtblicke</span>
+      </a>
+      <div class="nav-links">
+        <a href="/portfolio">Portfolio</a>
+        <a href="/blog">Blog</a>
+        <a href="/ueber-mich">Über mich</a>
+        <a href="/kontakt">Kontakt</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="/portfolio" class="mobile-link">Portfolio</a>
+      <a href="/blog" class="mobile-link">Blog</a>
+      <a href="/ueber-mich" class="mobile-link">Über mich</a>
+      <a href="/kontakt" class="mobile-link">Kontakt</a>
+    </div>
+
+    <!-- Inhalt -->
+    <slot />
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span class="footer-logo">Olis Lichtblicke</span>
+      <span class="footer-copy">© {new Date().getFullYear()} Oliver Stephan · olislichtblicke.de</span>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+      <p class="cookie-text">
+        Diese Website verwendet Cookies, um die Nutzererfahrung zu verbessern.
+        <a href="/datenschutz">Mehr erfahren</a>
+      </p>
+      <div class="cookie-btns">
+        <button class="btn-cookie-accept" id="cookieAccept">Akzeptieren</button>
+        <button class="btn-cookie-reject" id="cookieReject">Ablehnen</button>
+      </div>
+    </div>
+
+    <script>
+      // Nav scroll
+      const navbar = document.getElementById('navbar')!
+      window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 40)
+      })
+
+      // Hamburger
+      const hamburger = document.getElementById('hamburger')!
+      const mobileMenu = document.getElementById('mobileMenu')!
+      hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'))
+      mobileMenu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => mobileMenu.classList.remove('open'))
+      })
+
+      // Cookie
+      const banner = document.getElementById('cookieBanner')!
+      if (localStorage.getItem('cookies')) banner.classList.add('hidden')
+      document.getElementById('cookieAccept')!.addEventListener('click', () => {
+        localStorage.setItem('cookies', 'accepted')
+        banner.classList.add('hidden')
+      })
+      document.getElementById('cookieReject')!.addEventListener('click', () => {
+        localStorage.setItem('cookies', 'rejected')
+        banner.classList.add('hidden')
+      })
+
+      // Scroll Reveal
+      const reveals = document.querySelectorAll('.reveal')
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') })
+      }, { threshold: 0.1 })
+      reveals.forEach(el => observer.observe(el))
+    </script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { getPhotos, urlFor } from '../lib/sanity'
+
+const photos = await getPhotos()
+const portrait = photos[0]
+---
+
+<BaseLayout title="Über mich" description="Über Oliver – Fotograf aus Essen, Leidenschaft für Tierfotografie und Licht.">
+
+  <div style="padding-top:5rem;">
+    <section class="section">
+      <div class="section-inner">
+        <div class="about-inner">
+
+          <div class="about-img reveal">
+            {portrait?.image
+              ? <img src={urlFor(portrait.image).width(700).height(950).fit('crop').url()} alt="Oliver" loading="lazy" />
+              : <div style="aspect-ratio:3/4;background:var(--stone);"></div>
+            }
+          </div>
+
+          <div class="about-text reveal">
+            <p class="section-label">Wer ich bin</p>
+            <div class="divider"></div>
+            <h1 class="section-title">
+              Hallo, ich bin<br />
+              <em style="font-style:italic;color:var(--sand);">Oliver.</em>
+            </h1>
+            <p class="about-body">
+              Fotograf aus Essen mit einer Leidenschaft für Tierfotografie
+              und die Schönheit des Lichts. Unter dem Namen <strong>Olis Lichtblicke</strong>
+              halte ich Momente fest, die sonst im Alltag untergehen würden.
+            </p>
+            <p class="about-body">
+              Jedes Bild ist für mich eine Einladung, innezuhalten und die
+              Welt durch einen anderen Blickwinkel zu sehen – geduldig,
+              aufmerksam und mit einem Gespür für den richtigen Moment.
+            </p>
+            <div class="about-stats">
+              <div>
+                <p class="stat-num">5+</p>
+                <p class="stat-label">Jahre Erfahrung</p>
+              </div>
+              <div>
+                <p class="stat-num">∞</p>
+                <p class="stat-label">Leidenschaft</p>
+              </div>
+              <div>
+                <p class="stat-num">RAW</p>
+                <p class="stat-label">Immer</p>
+              </div>
+            </div>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+              <a href="/portfolio" class="btn-primary">Portfolio ansehen</a>
+              <a href="/kontakt" class="btn-outline">Kontakt aufnehmen</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+</BaseLayout>

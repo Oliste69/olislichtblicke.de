@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { getPosts, urlFor } from '../lib/sanity'
+
+const posts = await getPosts()
+---
+
+<BaseLayout title="Blog" description="Blog von Oliver – Gedanken zur Fotografie, Technik und mehr.">
+
+  <div style="padding-top:5rem;">
+    <section class="section">
+      <div class="section-inner">
+        <div class="reveal">
+          <p class="section-label">Gedanken & Geschichten</p>
+          <h1 class="section-title">Blog</h1>
+        </div>
+
+        {posts.length > 0 ? (
+          <div class="blog-grid reveal">
+            {posts.map((post: any) => (
+              <a href={`/blog/${post.slug.current}`} class="blog-card">
+                <div class="blog-card-img">
+                  {post.mainImage
+                    ? <img src={urlFor(post.mainImage).width(600).height(400).fit('crop').url()} alt={post.title} loading="lazy" />
+                    : <div style="aspect-ratio:3/2;background:var(--stone);"></div>
+                  }
+                </div>
+                <div class="blog-card-body">
+                  {post.publishedAt && (
+                    <p class="blog-date">
+                      {new Date(post.publishedAt).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </p>
+                  )}
+                  <h2 class="blog-title">{post.title}</h2>
+                  {post.excerpt && <p class="blog-teaser">{post.excerpt}</p>}
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="empty-state reveal">
+            Noch keine Beiträge vorhanden. Füge Posts im
+            <a href="http://localhost:3333">Sanity Studio</a> hinzu.
+          </div>
+        )}
+      </div>
+    </section>
+  </div>
+
+</BaseLayout>

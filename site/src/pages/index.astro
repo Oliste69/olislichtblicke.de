@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { getPhotos, getPosts, urlFor } from '../lib/sanity'
+
+const photos  = await getPhotos()
+const posts   = await getPosts()
+const heroImg = photos[0]
+const grid    = photos.slice(1, 7)
+const blogPreview = posts.slice(0, 3)
+---
+
+<BaseLayout title="Startseite">
+
+  <!-- ── Hero ── -->
+  <section class="hero" id="home">
+    <div class="hero-text">
+      <p class="hero-tag">Fotograf · Essen · Deutschland</p>
+      <h1 class="hero-headline">
+        Das Licht<br />
+        macht den<br />
+        <em>Moment.</em>
+      </h1>
+      <p class="hero-sub">
+        Ich halte Augenblicke fest, die sonst verloren gehen – mit Geduld,
+        Gespür und einem Auge für das Besondere.
+      </p>
+      <a href="/portfolio" class="btn-primary">Portfolio entdecken</a>
+    </div>
+    <div class="hero-image">
+      {heroImg?.image
+        ? <img
+            src={urlFor(heroImg.image).width(1200).height(1400).fit('crop').url()}
+            alt={heroImg.title}
+          />
+        : <div style="width:100%;height:100%;background:linear-gradient(135deg,#E8E2D9 0%,#D5CCBF 100%);"></div>
+      }
+      <div class="hero-scroll">Scroll</div>
+    </div>
+  </section>
+
+  <!-- ── Portfolio Vorschau ── -->
+  {grid.length > 0 && (
+    <section id="portfolio" class="section">
+      <div class="section-inner">
+        <div class="portfolio-header reveal">
+          <div>
+            <p class="section-label">Meine Arbeit</p>
+            <h2 class="section-title" style="margin-bottom:0;">Portfolio</h2>
+          </div>
+          <a href="/portfolio" class="btn-outline">Alle Fotos</a>
+        </div>
+        <div class="portfolio-grid reveal">
+          {grid.map((photo: any) => (
+            <a href="/portfolio" class="portfolio-item">
+              <img
+                src={urlFor(photo.image).width(800).url()}
+                alt={photo.title}
+                loading="lazy"
+              />
+              <div class="overlay">
+                <span class="overlay-cat">{photo.category?.title ?? ''}</span>
+                <span class="overlay-title">{photo.title}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- ── Blog Vorschau ── -->
+  {blogPreview.length > 0 && (
+    <section id="blog" class="section blog-section">
+      <div class="section-inner">
+        <div class="reveal">
+          <p class="section-label">Aktuelles</p>
+          <h2 class="section-title">Blog</h2>
+        </div>
+        <div class="blog-grid reveal">
+          {blogPreview.map((post: any) => (
+            <a href={`/blog/${post.slug.current}`} class="blog-card">
+              <div class="blog-card-img">
+                {post.mainImage
+                  ? <img src={urlFor(post.mainImage).width(600).height(400).fit('crop').url()} alt={post.title} loading="lazy" />
+                  : <div style="aspect-ratio:3/2;background:var(--stone);"></div>
+                }
+              </div>
+              <div class="blog-card-body">
+                {post.publishedAt && (
+                  <p class="blog-date">
+                    {new Date(post.publishedAt).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </p>
+                )}
+                <h3 class="blog-title">{post.title}</h3>
+                {post.excerpt && <p class="blog-teaser">{post.excerpt}</p>}
+              </div>
+            </a>
+          ))}
+        </div>
+        <a href="/blog" class="blog-more reveal">Alle Beiträge lesen</a>
+      </div>
+    </section>
+  )}
+
+  <!-- ── Über mich Teaser ── -->
+  <section id="ueber-mich" class="section">
+    <div class="section-inner">
+      <div class="about-inner">
+        <div class="about-img reveal">
+          {photos[1]?.image
+            ? <img src={urlFor(photos[1].image).width(700).height(900).fit('crop').url()} alt="Oliver" loading="lazy" />
+            : <div style="aspect-ratio:3/4;background:var(--stone);"></div>
+          }
+        </div>
+        <div class="about-text reveal">
+          <p class="section-label">Wer ich bin</p>
+          <div class="divider"></div>
+          <h2 class="section-title">Licht.<br /><em style="font-style:italic;color:var(--sand);">Geduld.</em><br />Moment.</h2>
+          <p class="about-body">
+            Ich bin Oliver, Fotograf aus Essen. Unter dem Namen Olis Lichtblicke
+            halte ich Momente fest, die sonst im Alltag untergehen würden –
+            mit Geduld, Gespür und einem Auge für das Besondere.
+          </p>
+          <div class="about-stats">
+            <div>
+              <p class="stat-num">5+</p>
+              <p class="stat-label">Jahre Erfahrung</p>
+            </div>
+            <div>
+              <p class="stat-num">∞</p>
+              <p class="stat-label">Leidenschaft</p>
+            </div>
+            <div>
+              <p class="stat-num">RAW</p>
+              <p class="stat-label">Immer</p>
+            </div>
+          </div>
+          <a href="/ueber-mich" class="btn-primary">Mehr über mich</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Kontakt Teaser ── -->
+  <section id="kontakt" class="section kontakt-section">
+    <div class="kontakt-inner reveal">
+      <p class="section-label">Schreib mir</p>
+      <h2 class="section-title">Lass uns zusammenarbeiten.</h2>
+      <p class="kontakt-sub">
+        Du hast ein Projekt, eine Idee oder willst einfach Hallo sagen?
+        Ich freue mich auf deine Nachricht.
+      </p>
+      <a href="/kontakt" class="btn-primary">Kontakt aufnehmen</a>
+    </div>
+  </section>
+
+</BaseLayout>

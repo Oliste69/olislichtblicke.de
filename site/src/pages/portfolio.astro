@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { getPhotos, urlFor, client } from '../lib/sanity'
+
+const photos     = await getPhotos()
+const categories = await client.fetch(`
+  *[_type == "category"] | order(title asc) { _id, title, slug }
+`)
+---
+
+<BaseLayout title="Portfolio" description="Fotografie-Portfolio von Oliver – Tierfotografie, Landschaft und mehr.">
+
+  <div style="padding-top:5rem;">
+    <section id="portfolio" class="section">
+      <div class="section-inner">
+
+        <div class="portfolio-header reveal">
+          <div>
+            <p class="section-label">Meine Arbeit</p>
+            <h1 class="section-title" style="margin-bottom:0;">Portfolio</h1>
+          </div>
+          {categories.length > 0 && (
+            <div class="filter-bar" role="group" aria-label="Portfolio filtern" id="filter">
+              <button class="filter-btn active" data-category="all">Alle</button>
+              {categories.map((cat: any) => (
+                <button class="filter-btn" data-category={cat.slug?.current}>
+                  {cat.title}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {photos.length > 0 ? (
+          <div class="portfolio-grid reveal" id="photo-grid">
+            {photos.map((photo: any) => (
+              <div
+                class="portfolio-item"
+                data-category={photo.category?.slug?.current ?? 'all'}
+                data-lightbox={urlFor(photo.image).width(1800).url()}
+                data-title={photo.title}
+              >
+                <img
+                  src={urlFor(photo.image).width(800).url()}
+                  alt={photo.title}
+                  loading="lazy"
+                />
+                <div class="overlay">
+                  <span class="overlay-cat">{photo.category?.title ?? ''}</span>
+                  <span class="overlay-title">{photo.title}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div class="empty-state reveal">
+            Noch keine Fotos vorhanden. Füge Fotos im
+            <a href="http://localhost:3333">Sanity Studio</a> hinzu.
+          </div>
+        )}
+
+      </div>
+    </section>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" style="display:none; position:fixed; inset:0; z-index:200; background:rgba(28,28,28,0.97); align-items:center; justify-content:center; padding:2rem;">
+    <button id="lb-close" style="position:absolute;top:1.5rem;right:2rem;background:none;border:none;color:#F7F4EF;font-size:2rem;cursor:pointer;line-height:1;">×</button>
+    <img id="lb-img" src="" alt="" style="max-height:90vh;max-width:90vw;object-fit:contain;" />
+    <p id="lb-title" style="position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:rgba(247,244,239,0.6);font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;"></p>
+  </div>
+</BaseLayout>
+
+<script>
+  // ── Filter ──
+  const btns  = document.querySelectorAll<HTMLButtonElement>('.filter-btn')
+  const items = document.querySelectorAll<HTMLElement>('.portfolio-item')
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'))
+      btn.classList.add('active')
+      const cat = btn.dataset.category
+      items.forEach(item => {
+        item.classList.toggle('hidden', cat !== 'all' && item.dataset.category !== cat)
+      })
+    })
+  })
+
+  // ── Lightbox ──
+  const lb      = document.getElementById('lightbox')!
+  const lbImg   = document.getElementById('lb-img') as HTMLImageElement
+  const lbTitle = document.getElementById('lb-title')!
+  const lbClose = document.getElementById('lb-close')!
+
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      lbImg.src        = item.dataset.lightbox ?? ''
+      lbTitle.textContent = item.dataset.title ?? ''
+      lb.style.display = 'flex'
+    })
+  })
+
+  const close = () => { lb.style.display = 'none' }
+  lbClose.addEventListener('click', close)
+  lb.addEventListener('click', e => { if (e.target === lb) close() })
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close() })
+</script>
