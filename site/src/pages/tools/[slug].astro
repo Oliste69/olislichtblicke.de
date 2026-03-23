@@ -62,3 +62,81 @@ if (!tool) return Astro.redirect('/tools')
   </article>
 
 </BaseLayout>
+
+<style>
+.post-wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 8rem 2rem 6rem;
+}
+.post-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+.post-date {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sand);
+  margin-bottom: 1rem;
+}
+.post-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--charcoal);
+  margin-bottom: 1.5rem;
+}
+.post-excerpt {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.post-hero {
+  margin-bottom: 3rem;
+}
+.post-hero img {
+  width: 100%;
+  aspect-ratio: 2/1;
+  object-fit: cover;
+}
+.post-body {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--charcoal);
+}
+.post-body :global(p) {
+  margin-bottom: 1.5rem;
+}
+.post-body :global(h2) {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 300;
+  color: var(--charcoal);
+  margin: 2.5rem 0 1rem;
+}
+.post-body :global(h3) {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--charcoal);
+  margin: 2rem 0 0.75rem;
+}
+.post-back {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--stone);
+}
+.post-back a {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.post-back a:hover { color: var(--sand); }
+.post-empty { color: var(--muted); font-style: italic; }
+</style>
