@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { getTools, urlFor } from '../lib/sanity'
+
+const tools = await getTools()
+---
+
+<BaseLayout title="Tools" description="Nützliche Tools und Ressourcen für Fotografen von Oliver – Olis Lichtblicke.">
+
+  <div style="padding-top:5rem;">
+    <section class="section">
+      <div class="section-inner">
+        <div class="reveal">
+          <p class="section-label">Hilfreiches</p>
+          <h1 class="section-title">Tools</h1>
+        </div>
+
+        {tools.length > 0 ? (
+          <div class="blog-grid reveal">
+            {tools.map((tool: any) => (
+              <a href={`/tools/${tool.slug.current}`} class="blog-card">
+                <div class="blog-card-img">
+                  {tool.mainImage
+                    ? <img src={urlFor(tool.mainImage).width(600).height(400).fit('crop').url()} alt={tool.title} loading="lazy" />
+                    : <div style="aspect-ratio:3/2;background:var(--stone);"></div>
+                  }
+                </div>
+                <div class="blog-card-body">
+                  <div class="blog-meta">
+                    {tool.publishedAt && (
+                      <p class="blog-date">
+                        {new Date(tool.publishedAt).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })}
+                      </p>
+                    )}
+                  </div>
+                  <h2 class="blog-title">{tool.title}</h2>
+                  {tool.excerpt && <p class="blog-teaser">{tool.excerpt}</p>}
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="empty-state reveal">
+            Noch keine Tools vorhanden. Füge Einträge im
+            <a href="http://localhost:3333">Sanity Studio</a> hinzu.
+          </div>
+        )}
+      </div>
+    </section>
+  </div>
+
+</BaseLayout>

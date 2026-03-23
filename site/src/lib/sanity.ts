@@ -32,6 +32,22 @@ export async function getPosts() {
   `)
 }
 
+export async function getTools() {
+  return client.fetch(`
+    *[_type == "tool"] | order(publishedAt desc) {
+      _id, title, slug, publishedAt, excerpt, mainImage
+    }
+  `)
+}
+
+export async function getTool(slug: string) {
+  return client.fetch(`
+    *[_type == "tool" && slug.current == $slug][0] {
+      _id, title, slug, publishedAt, excerpt, mainImage, body
+    }
+  `, { slug })
+}
+
 export async function getPost(slug: string) {
   return client.fetch(`
     *[_type == "post" && slug.current == $slug][0] {

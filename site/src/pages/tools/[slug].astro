@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { getTool, getTools, urlFor } from '../../lib/sanity'
+
+export async function getStaticPaths() {
+  const tools = await getTools()
+  return tools.map((tool: any) => ({ params: { slug: tool.slug.current } }))
+}
+
+const { slug } = Astro.params
+const tool = await getTool(slug!)
+
+if (!tool) return Astro.redirect('/tools')
+---
+
+<BaseLayout title={tool.title} description={tool.excerpt ?? ''}>
+
+  <article class="post-wrap">
+
+    <!-- Header -->
+    <header class="post-header">
+      {tool.publishedAt && (
+        <p class="post-date">
+          {new Date(tool.publishedAt).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </p>
+      )}
+      <h1 class="post-title">{tool.title}</h1>
+      {tool.excerpt && <p class="post-excerpt">{tool.excerpt}</p>}
+    </header>
+
+    <!-- Titelbild -->
+    {tool.mainImage && (
+      <div class="post-hero">
+        <img
+          src={urlFor(tool.mainImage).width(1400).height(700).fit('crop').url()}
+          alt={tool.title}
+        />
+      </div>
+    )}
+
+    <!-- Inhalt -->
+    <div class="post-body">
+      {tool.body
+        ? <div set:html={tool.body.map((block: any) => {
+            if (block._type === 'block') {
+              const text = block.children?.map((c: any) => c.text).join('') ?? ''
+              if (block.style === 'h2') return `<h2>${text}</h2>`
+              if (block.style === 'h3') return `<h3>${text}</h3>`
+              return `<p>${text}</p>`
+            }
+            return ''
+          }).join('')} />
+        : <p class="post-empty">Noch kein Inhalt vorhanden.</p>
+      }
+    </div>
+
+    <!-- Zurück -->
+    <div class="post-back">
+      <a href="/tools">← Alle Tools</a>
+    </div>
+
+  </article>
+
+</BaseLayout>
