@@ -13,7 +13,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
           Du hast ein Projekt, eine Idee oder möchtest einfach Hallo sagen?
           Ich freue mich auf deine Nachricht.
         </p>
-        <form class="kontakt-form" name="kontakt" method="POST">
+        <form class="kontakt-form" id="kontaktForm">
           <div class="form-row">
             <div class="form-group">
               <label for="name">Name</label>
@@ -32,8 +32,42 @@ import BaseLayout from '../layouts/BaseLayout.astro'
             <label for="message">Nachricht</label>
             <textarea id="message" name="message" rows="5" placeholder="Deine Nachricht..." required></textarea>
           </div>
-          <button type="submit" class="btn-submit">Nachricht senden</button>
+          <button type="submit" class="btn-submit" id="submitBtn">Nachricht senden</button>
+          <p id="formSuccess" style="display:none; color:#6a9a6a; margin-top:1rem; font-size:0.9rem;">
+            Danke! Deine Nachricht wurde gesendet.
+          </p>
+          <p id="formError" style="display:none; color:#c0614a; margin-top:1rem; font-size:0.9rem;">
+            Etwas ist schiefgelaufen. Bitte versuche es erneut.
+          </p>
         </form>
+
+        <script>
+          const form = document.getElementById('kontaktForm') as HTMLFormElement
+          const btn  = document.getElementById('submitBtn') as HTMLButtonElement
+
+          form.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            btn.textContent = 'Wird gesendet…'
+            btn.disabled = true
+
+            const res = await fetch('/api/kontakt', {
+              method: 'POST',
+              body: new FormData(form),
+            })
+
+            if (res.ok) {
+              document.getElementById('formSuccess')!.style.display = 'block'
+              document.getElementById('formError')!.style.display = 'none'
+              form.reset()
+            } else {
+              document.getElementById('formError')!.style.display = 'block'
+              document.getElementById('formSuccess')!.style.display = 'none'
+            }
+
+            btn.textContent = 'Nachricht senden'
+            btn.disabled = false
+          })
+        </script>
       </div>
     </section>
   </div>
