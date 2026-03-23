@@ -91,12 +91,32 @@ const { title, description = 'Portfolio und Blog von Oliver – Fotograf aus Ess
         a.addEventListener('click', () => mobileMenu.classList.remove('open'))
       })
 
+      // Google Analytics
+      function loadAnalytics() {
+        if (document.getElementById('ga-script')) return
+        const s = document.createElement('script')
+        s.id = 'ga-script'
+        s.async = true
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-JPDYR9KLD7'
+        document.head.appendChild(s)
+        window.dataLayer = window.dataLayer || []
+        function gtag(...args: any[]) { window.dataLayer.push(args) }
+        gtag('js', new Date())
+        gtag('config', 'G-JPDYR9KLD7', { anonymize_ip: true })
+      }
+
       // Cookie
       const banner = document.getElementById('cookieBanner')!
-      if (localStorage.getItem('cookies')) banner.classList.add('hidden')
+      if (localStorage.getItem('cookies') === 'accepted') {
+        banner.classList.add('hidden')
+        loadAnalytics()
+      } else if (localStorage.getItem('cookies') === 'rejected') {
+        banner.classList.add('hidden')
+      }
       document.getElementById('cookieAccept')!.addEventListener('click', () => {
         localStorage.setItem('cookies', 'accepted')
         banner.classList.add('hidden')
+        loadAnalytics()
       })
       document.getElementById('cookieReject')!.addEventListener('click', () => {
         localStorage.setItem('cookies', 'rejected')
