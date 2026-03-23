@@ -26,11 +26,14 @@ const posts = await getPosts()
                   }
                 </div>
                 <div class="blog-card-body">
-                  {post.publishedAt && (
-                    <p class="blog-date">
-                      {new Date(post.publishedAt).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })}
-                    </p>
-                  )}
+                  <div class="blog-meta">
+                    {post.publishedAt && (
+                      <p class="blog-date">
+                        {new Date(post.publishedAt).toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' })}
+                      </p>
+                    )}
+                    {post.author?.name && <p class="blog-author">{post.author.name}</p>}
+                  </div>
                   <h2 class="blog-title">{post.title}</h2>
                   {post.excerpt && <p class="blog-teaser">{post.excerpt}</p>}
                 </div>

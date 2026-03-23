@@ -26,7 +26,8 @@ export async function getPhotos(category?: string) {
 export async function getPosts() {
   return client.fetch(`
     *[_type == "post"] | order(publishedAt desc) {
-      _id, title, slug, publishedAt, excerpt, mainImage
+      _id, title, slug, publishedAt, excerpt, mainImage,
+      author->{ name }
     }
   `)
 }
@@ -34,7 +35,8 @@ export async function getPosts() {
 export async function getPost(slug: string) {
   return client.fetch(`
     *[_type == "post" && slug.current == $slug][0] {
-      _id, title, slug, publishedAt, excerpt, mainImage, body
+      _id, title, slug, publishedAt, excerpt, mainImage, body,
+      author->{ name, image }
     }
   `, { slug })
 }
