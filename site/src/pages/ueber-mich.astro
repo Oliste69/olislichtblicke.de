@@ -39,7 +39,7 @@ const portrait = photos[0]
             </p>
             <div class="about-stats">
               <div>
-                <p class="stat-num">5+</p>
+                <p class="stat-num">20+</p>
                 <p class="stat-label">Jahre Erfahrung</p>
               </div>
               <div>
@@ -62,4 +62,137 @@ const portrait = photos[0]
     </section>
   </div>
 
+  <!-- ── Ausrüstung ── -->
+  <section class="section equip-section">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">Was ich nutze</p>
+        <h2 class="section-title">Meine Ausrüstung</h2>
+      </div>
+      <div class="equip-grid reveal">
+        <div class="equip-card">
+          <span class="equip-icon">⬡</span>
+          <p class="equip-name">Canon EOS R5</p>
+          <p class="equip-desc">Mein Hauptgehäuse – 45 MP, hervorragende Dynamik und zuverlässig bei jedem Licht.</p>
+        </div>
+        <div class="equip-card">
+          <span class="equip-icon">⬡</span>
+          <p class="equip-name">RF 100–500 mm</p>
+          <p class="equip-desc">Mein treuer Begleiter für Tierfotografie – flexibel, scharf und lichtstark.</p>
+        </div>
+        <div class="equip-card">
+          <span class="equip-icon">⬡</span>
+          <p class="equip-name">RF 24–70 mm</p>
+          <p class="equip-desc">Vielseitig für Landschaft, Architektur und Reportage – mein meistgenutztes Objektiv.</p>
+        </div>
+        <div class="equip-card">
+          <span class="equip-icon">⬡</span>
+          <p class="equip-name">RF 50 mm</p>
+          <p class="equip-desc">Für natürliche Perspektiven und ruhige, stimmungsvolle Aufnahmen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Schwerpunkte ── -->
+  <section class="section focus-section">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">Was mich bewegt</p>
+        <h2 class="section-title">Meine Schwerpunkte</h2>
+      </div>
+      <div class="focus-grid reveal">
+        <div class="focus-item">
+          <div class="focus-num">01</div>
+          <h3 class="focus-title">Tierfotografie</h3>
+          <p class="focus-body">Tiere in ihrer natürlichen Umgebung zu beobachten und den perfekten Moment einzufangen – das ist meine größte Leidenschaft.</p>
+        </div>
+        <div class="focus-item">
+          <div class="focus-num">02</div>
+          <h3 class="focus-title">Landschaft</h3>
+          <p class="focus-body">Weite, Stille und das besondere Licht der goldenen Stunde – Landschaftsfotografie gibt mir Ruhe und Perspektive.</p>
+        </div>
+        <div class="focus-item">
+          <div class="focus-num">03</div>
+          <h3 class="focus-title">Architektur</h3>
+          <p class="focus-body">Linien, Strukturen und Kontraste – ich sehe in Gebäuden und Räumen eine eigene Bildsprache.</p>
+        </div>
+        <div class="focus-item">
+          <div class="focus-num">04</div>
+          <h3 class="focus-title">Street</h3>
+          <p class="focus-body">Das Leben auf der Straße, ungefiltert und ehrlich – spontane Momente die man nicht inszenieren kann.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
+
+<style>
+/* ── Ausrüstung ── */
+.equip-section { background: var(--stone); }
+.equip-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+.equip-card {
+  background: var(--cream);
+  padding: 2rem 1.5rem;
+  border-top: 2px solid var(--sand);
+}
+.equip-icon {
+  display: block;
+  font-size: 1.2rem;
+  color: var(--sand);
+  margin-bottom: 1rem;
+}
+.equip-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--charcoal);
+  margin-bottom: 0.75rem;
+}
+.equip-desc {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── Schwerpunkte ── */
+.focus-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3rem 2rem;
+}
+.focus-num {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--stone);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.focus-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--charcoal);
+  margin-bottom: 0.75rem;
+}
+.focus-body {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+@media (max-width: 900px) {
+  .equip-grid { grid-template-columns: repeat(2, 1fr); }
+  .focus-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 550px) {
+  .equip-grid { grid-template-columns: 1fr; }
+  .focus-grid { grid-template-columns: 1fr; }
+}
+</style>
