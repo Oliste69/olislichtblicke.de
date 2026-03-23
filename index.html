@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oli's Lichtblicke – Fotograf aus Essen</title>
+  <meta name="description" content="Portfolio und Blog von Oliver – Fotograf aus Essen. Portrait, Landschaft, Events und Street Photography." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:   '#F7F4EF',
+            stone:   '#E8E2D9',
+            sand:    '#C4A882',
+            charcoal:'#1C1C1C',
+            muted:   '#7A7570',
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'serif'],
+            body:    ['"DM Sans"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: #F7F4EF;
+      color: #1C1C1C;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── Placeholder images ── */
+    .ph {
+      background: linear-gradient(135deg, #E8E2D9 0%, #D5CCBF 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #A09890;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s ease, padding 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(247, 244, 239, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 1rem 2.5rem;
+      border-bottom: 1px solid #E8E2D9;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: #1C1C1C;
+      text-decoration: none;
+    }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #1C1C1C;
+      text-decoration: none;
+      margin-left: 2rem;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* ── Mobile menu ── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 1px; background: #1C1C1C; display: block; transition: all 0.3s; }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #F7F4EF;
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      text-decoration: none;
+      color: #1C1C1C;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    .mobile-menu a:hover { opacity: 1; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ── Hero ── */
+    .hero {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 5rem;
+    }
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3rem 4rem 2.5rem;
+    }
+    .hero-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #C4A882;
+      margin-bottom: 1.5rem;
+    }
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: #1C1C1C;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: #C4A882;
+    }
+    .hero-sub {
+      font-size: 0.95rem;
+      color: #7A7570;
+      line-height: 1.7;
+      max-width: 380px;
+      margin-bottom: 2.5rem;
+    }
+    .btn-primary {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background: #1C1C1C;
+      color: #F7F4EF;
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s;
+      align-self: flex-start;
+    }
+    .btn-primary:hover { background: #C4A882; transform: translateY(-1px); }
+    .hero-image { position: relative; overflow: hidden; }
+    .hero-image .ph { width: 100%; height: 100%; font-size: 0.85rem; }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #7A7570;
+    }
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 40px;
+      background: #C4A882;
+      animation: scrollline 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollline {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; grid-template-rows: auto 55vw; height: auto; }
+      .hero-text { padding: 7rem 1.5rem 2rem; }
+      .hero-image { height: 55vw; }
+    }
+
+    /* ── Section defaults ── */
+    section { padding: 6rem 2.5rem; }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #C4A882;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: #1C1C1C;
+      margin-bottom: 3rem;
+    }
+
+    /* ── Portfolio ── */
+    #portfolio { max-width: 1400px; margin: 0 auto; padding: 6rem 2.5rem; }
+    .portfolio-header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2.5rem; }
+    .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .filter-btn {
+      padding: 0.45rem 1.1rem;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid #D5CCBF;
+      background: transparent;
+      color: #7A7570;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: #1C1C1C; color: #1C1C1C; }
+    .filter-btn.active { background: #1C1C1C; color: #F7F4EF; border-color: #1C1C1C; }
+
+    .portfolio-grid {
+      columns: 3;
+      gap: 1rem;
+    }
+    .portfolio-item {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .portfolio-item .ph {
+      width: 100%;
+      transition: transform 0.5s ease;
+    }
+    .portfolio-item:hover .ph { transform: scale(1.03); }
+    .portfolio-item .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(28,28,28,0);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 1.25rem;
+      transition: background 0.35s;
+    }
+    .portfolio-item:hover .overlay { background: rgba(28,28,28,0.45); }
+    .overlay-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #F7F4EF;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.3s 0.05s;
+    }
+    .overlay-cat {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #C4A882;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.3s;
+    }
+    .portfolio-item:hover .overlay-title,
+    .portfolio-item:hover .overlay-cat { opacity: 1; transform: translateY(0); }
+    .portfolio-item.hidden { display: none; }
+
+    @media (max-width: 900px)  { .portfolio-grid { columns: 2; } }
+    @media (max-width: 550px)  { .portfolio-grid { columns: 1; } }
+
+    /* ── Blog ── */
+    #blog { background: #EDEAE4; }
+    .blog-inner { max-width: 1200px; margin: 0 auto; }
+    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .blog-card { background: #F7F4EF; cursor: pointer; }
+    .blog-card-img .ph { width: 100%; aspect-ratio: 3/2; }
+    .blog-card-body { padding: 1.5rem; }
+    .blog-date { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #C4A882; margin-bottom: 0.5rem; }
+    .blog-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: #1C1C1C;
+      margin-bottom: 0.75rem;
+      transition: color 0.2s;
+    }
+    .blog-card:hover .blog-title { color: #C4A882; }
+    .blog-teaser { font-size: 0.88rem; color: #7A7570; line-height: 1.65; }
+    .blog-more {
+      display: block;
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #1C1C1C;
+      text-decoration: none;
+      border-bottom: 1px solid #C4A882;
+      padding-bottom: 2px;
+      align-self: center;
+      width: fit-content;
+      margin-inline: auto;
+    }
+    @media (max-width: 900px)  { .blog-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px)  { .blog-grid { grid-template-columns: 1fr; } }
+
+    /* ── Über mich ── */
+    #ueber-mich { max-width: 1200px; margin: 0 auto; }
+    .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-img .ph { width: 100%; aspect-ratio: 3/4; }
+    .about-text .section-title { margin-bottom: 1.5rem; }
+    .about-body { font-size: 0.95rem; color: #7A7570; line-height: 1.8; margin-bottom: 2rem; }
+    .about-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2.5rem; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: #1C1C1C;
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: #7A7570; margin-top: 0.3rem; }
+    @media (max-width: 768px) {
+      .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .about-img .ph { aspect-ratio: 4/3; }
+    }
+
+    /* ── Kontakt ── */
+    #kontakt { background: #1C1C1C; color: #F7F4EF; }
+    .kontakt-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+    #kontakt .section-label { color: #C4A882; }
+    #kontakt .section-title { color: #F7F4EF; margin-bottom: 0.75rem; }
+    .kontakt-sub { font-size: 0.95rem; color: #A09890; line-height: 1.7; margin-bottom: 3rem; }
+    .kontakt-form { display: flex; flex-direction: column; gap: 1rem; text-align: left; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: #7A7570; }
+    .form-group input,
+    .form-group textarea {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #F7F4EF;
+      padding: 0.85rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: #6B6560; }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: #C4A882; }
+    .btn-submit {
+      padding: 0.9rem 2.5rem;
+      background: #C4A882;
+      color: #1C1C1C;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+      align-self: flex-start;
+    }
+    .btn-submit:hover { background: #F7F4EF; transform: translateY(-1px); }
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+    /* ── Footer ── */
+    footer {
+      background: #1C1C1C;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #F7F4EF;
+      letter-spacing: 0.04em;
+    }
+    .footer-copy { font-size: 0.75rem; color: #6B6560; }
+    .footer-social { display: flex; gap: 1rem; }
+    .footer-social a {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: #A09890;
+      text-decoration: none;
+      font-size: 0.75rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .footer-social a:hover { border-color: #C4A882; color: #C4A882; }
+
+    /* ── Cookie Banner ── */
+    #cookie-banner {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #1C1C1C;
+      color: #F7F4EF;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      z-index: 999;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      transform: translateY(0);
+      transition: transform 0.4s ease;
+    }
+    #cookie-banner.hidden { transform: translateY(110%); }
+    .cookie-text { font-size: 0.85rem; color: #A09890; max-width: 600px; line-height: 1.5; }
+    .cookie-text a { color: #C4A882; text-decoration: none; }
+    .cookie-text a:hover { text-decoration: underline; }
+    .cookie-btns { display: flex; gap: 0.75rem; flex-shrink: 0; }
+    .btn-cookie-accept {
+      padding: 0.6rem 1.4rem;
+      background: #C4A882;
+      color: #1C1C1C;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-cookie-accept:hover { background: #F7F4EF; }
+    .btn-cookie-reject {
+      padding: 0.6rem 1.4rem;
+      background: transparent;
+      color: #7A7570;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-cookie-reject:hover { border-color: #7A7570; color: #A09890; }
+
+    /* ── Scroll animations ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 40px; height: 1px;
+      background: #C4A882;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     NAVIGATION
+══════════════════════════════════════ -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="Context/brand/logovektorOhneRand.png" alt="Oli's Lichtblicke" style="height:80px; width:auto;" />
+  </a>
+  <div class="nav-links">
+    <a href="#portfolio">Portfolio</a>
+    <a href="#blog">Blog</a>
+    <a href="#ueber-mich">Über mich</a>
+    <a href="#kontakt">Kontakt</a>
+  </div>
+  <div class="hamburger" id="hamburger" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#portfolio" class="mobile-link">Portfolio</a>
+  <a href="#blog"      class="mobile-link">Blog</a>
+  <a href="#ueber-mich" class="mobile-link">Über mich</a>
+  <a href="#kontakt"   class="mobile-link">Kontakt</a>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-text">
+    <p class="hero-tag">Fotograf · Essen · Deutschland</p>
+    <h1 class="hero-headline">
+      Das Licht<br>
+      macht den<br>
+      <em>Moment.</em>
+    </h1>
+    <p class="hero-sub">
+      Ich halte Augenblicke fest, die sonst verloren gehen – mit Geduld, Gespür und einem Auge für das Besondere.
+    </p>
+    <a href="#portfolio" class="btn-primary">Portfolio entdecken</a>
+  </div>
+  <div class="hero-image">
+    <img src="Context/images/_DSC2736.jpg" alt="Tiger – Tierfotografie" style="width:100%; height:100%; object-fit:cover; object-position:center;" />
+    <div class="hero-scroll">Scroll</div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     PORTFOLIO
+══════════════════════════════════════ -->
+<div id="portfolio">
+  <div class="portfolio-header reveal">
+    <div>
+      <p class="section-label">Meine Arbeit</p>
+      <h2 class="section-title" style="margin-bottom:0;">Portfolio</h2>
+    </div>
+    <div class="filter-bar" role="group" aria-label="Portfolio filtern">
+      <button class="filter-btn active" data-filter="all">Alle</button>
+      <button class="filter-btn" data-filter="portrait">Portrait</button>
+      <button class="filter-btn" data-filter="landschaft">Landschaft</button>
+      <button class="filter-btn" data-filter="events">Events</button>
+      <button class="filter-btn" data-filter="street">Street</button>
+    </div>
+  </div>
+
+  <div class="portfolio-grid reveal">
+
+    <!-- Portrait -->
+    <div class="portfolio-item" data-category="portrait">
+      <img src="Context/images/_DSC2618.jpg" alt="Eisbär" style="width:100%; aspect-ratio:2/3; object-fit:cover;" />
+      <div class="overlay">
+        <span class="overlay-cat">Portrait</span>
+        <span class="overlay-title">Platzhaltertitel</span>
+      </div>
+    </div>
+
+    <!-- Landschaft -->
+    <div class="portfolio-item" data-category="landschaft">
+      <img src="Context/images/_DSC2736.jpg" alt="Tiger" style="width:100%; aspect-ratio:3/2; object-fit:cover;" />
+      <div class="overlay">
+        <span class="overlay-cat">Landschaft</span>
+        <span class="overlay-title">Platzhaltertitel</span>
+      </div>
+    </div>
+
+    <!-- Street -->
+    <div class="portfolio-item" data-category="street">
+      <img src="Context/images/_DSC2758.jpg" alt="Roter Panda" style="width:100%; aspect-ratio:1/1; object-fit:cover;" />
+      <div class="overlay">
+        <span class="overlay-cat">Street</span>
+        <span class="overlay-title">Platzhaltertitel</span>
+      </div>
+    </div>
+
+    <!-- Events -->
+    <div class="portfolio-item" data-category="events">
+      <img src="Context/images/_DSC2839.jpg" alt="Eichhörnchen" style="width:100%; aspect-ratio:3/2; object-fit:cover;" />
+      <div class="overlay">
+        <span class="overlay-cat">Events</span>
+        <span class="overlay-title">Platzhaltertitel</span>
+      </div>
+    </div>
+
+    <!-- Portrait -->
+    <div class="portfolio-item" data-category="portrait">
+      <img src="Context/images/_DSC2871.jpg" alt="Grünspecht" style="width:100%; aspect-ratio:3/4; object-fit:cover;" />
+      <div class="overlay">
+        <span class="overlay-cat">Portrait</span>
+        <span class="overlay-title">Platzhaltertitel</span>
+      </div>
+    </div>
+
+    <!-- Landschaft -->
+    <div class="portfolio-item" data-category="landschaft">
+      <div class="ph" style="aspect-ratio:16/9;">Bild · Landschaft</div>
+      <div class="overlay">
+        <span class="overlay-cat">Landschaft</span>
+        <span class="overlay-title">Platzhaltertitel</span>
+      </div>
+    </div>
+
+    <!-- Street -->
+    <div class="portfolio-item" data-category="street">
+      <div class="ph" style="aspect-ratio:2/3;">Bild · Street</div>
+      <div class="overlay">
+        <span class="overlay-cat">Street</span>
+        <span class="overlay-title">Platzhaltertitel</span>
+      </div>
+    </div>
+
+    <!-- Events -->
+    <div class="portfolio-item" data-category="events">
+      <div class="ph" style="aspect-ratio:1/1;">Bild · Events</div>
+      <div class="overlay">
+        <span class="overlay-cat">Events</span>
+        <span class="overlay-title">Platzhaltertitel</span>
+      </div>
+    </div>
+
+    <!-- Portrait -->
+    <div class="portfolio-item" data-category="portrait">
+      <div class="ph" style="aspect-ratio:4/5;">Bild · Portrait</div>
+      <div class="overlay">
+        <span class="overlay-cat">Portrait</span>
+        <span class="overlay-title">Platzhaltertitel</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     BLOG
+══════════════════════════════════════ -->
+<section id="blog">
+  <div class="blog-inner">
+    <div class="reveal" style="text-align:center; margin-bottom:3rem;">
+      <p class="section-label">Gedanken & Geschichten</p>
+      <h2 class="section-title" style="margin-bottom:0;">Blog</h2>
+    </div>
+
+    <div class="blog-grid">
+
+      <article class="blog-card reveal">
+        <div class="blog-card-img">
+          <div class="ph" style="aspect-ratio:3/2;">Bild · Blog 1</div>
+        </div>
+        <div class="blog-card-body">
+          <p class="blog-date">15. März 2026</p>
+          <h3 class="blog-title">Warum das goldene Licht alles verändert</h3>
+          <p class="blog-teaser">Die Stunde nach Sonnenaufgang und vor Sonnenuntergang – für Fotografen gibt es kaum etwas Schöneres. Was macht dieses Licht so besonders?</p>
+        </div>
+      </article>
+
+      <article class="blog-card reveal">
+        <div class="blog-card-img">
+          <div class="ph" style="aspect-ratio:3/2;">Bild · Blog 2</div>
+        </div>
+        <div class="blog-card-body">
+          <p class="blog-date">02. März 2026</p>
+          <h3 class="blog-title">Street Photography in Essen – meine Lieblingsorte</h3>
+          <p class="blog-teaser">Die Stadt hält für Straßenfotografen überraschend viel bereit. Meine persönlichen Spots und was sie so besonders macht.</p>
+        </div>
+      </article>
+
+      <article class="blog-card reveal">
+        <div class="blog-card-img">
+          <div class="ph" style="aspect-ratio:3/2;">Bild · Blog 3</div>
+        </div>
+        <div class="blog-card-body">
+          <p class="blog-date">18. Februar 2026</p>
+          <h3 class="blog-title">Meine Ausrüstung – was ich wirklich benutze</h3>
+          <p class="blog-teaser">Keine Sponsoren, keine Affiliate-Links – einfach ein ehrlicher Blick auf das Gear, das ich täglich in den Händen halte.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <a href="#" class="blog-more reveal" style="display:block; margin-top:3rem;">Alle Beiträge lesen</a>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     ÜBER MICH
+══════════════════════════════════════ -->
+<section id="ueber-mich">
+  <div class="about-inner">
+    <div class="about-img reveal">
+      <div class="ph" style="aspect-ratio:3/4;">Platzhalterfoto · Oliver</div>
+    </div>
+    <div class="about-text reveal">
+      <p class="section-label">Über mich</p>
+      <div class="divider"></div>
+      <h2 class="section-title">Ich bin Oliver –<br><em style="font-style:italic; color:#C4A882;">ich fotografiere,<br>was bewegt.</em></h2>
+      <p class="about-body">
+        Platzhaltertext – hier steht deine persönliche Geschichte. Was dich zur Fotografie gebracht hat, was dich antreibt und was deine Arbeit besonders macht. Authentisch, ehrlich, persönlich.
+      </p>
+      <p class="about-body">
+        Weiterer Absatz: Spezialisierungen, Erfahrungen, besondere Projekte oder Werte, die dir wichtig sind.
+      </p>
+      <div class="about-stats">
+        <div>
+          <div class="stat-num">— <span style="font-size:1rem; letter-spacing:0.05em;">Jahre</span></div>
+          <div class="stat-label">Erfahrung</div>
+        </div>
+        <div>
+          <div class="stat-num">—</div>
+          <div class="stat-label">Projekte</div>
+        </div>
+        <div>
+          <div class="stat-num">—</div>
+          <div class="stat-label">Aufträge</div>
+        </div>
+      </div>
+      <a href="#kontakt" class="btn-primary">Kontakt aufnehmen</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     KONTAKT
+══════════════════════════════════════ -->
+<section id="kontakt">
+  <div class="kontakt-inner reveal">
+    <p class="section-label">Lass uns reden</p>
+    <h2 class="section-title">Anfrage &amp; Kontakt</h2>
+    <p class="kontakt-sub">Du hast ein Projekt im Kopf, brauchst Fotos für ein Event oder möchtest einfach Hallo sagen? Ich freue mich auf deine Nachricht.</p>
+
+    <form class="kontakt-form" onsubmit="handleFormSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Dein Name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">E-Mail</label>
+          <input type="email" id="email" name="email" placeholder="deine@email.de" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="betreff">Betreff</label>
+        <input type="text" id="betreff" name="betreff" placeholder="Worum geht es?" />
+      </div>
+      <div class="form-group">
+        <label for="nachricht">Nachricht</label>
+        <textarea id="nachricht" name="nachricht" rows="5" placeholder="Erzähl mir von deinem Projekt …" required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Nachricht senden</button>
+    </form>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer>
+  <a href="index.html" style="display:inline-block;">
+    <img src="Context/brand/logovektorOhneRand.png" alt="Oli's Lichtblicke" style="height:32px; width:auto; filter:invert(1);" />
+  </a>
+  <div class="footer-copy">© 2026 Oliver · olislichtblicke.de</div>
+  <div class="footer-social">
+    <a href="#" aria-label="Instagram" title="Instagram">IG</a>
+    <a href="#" aria-label="Facebook" title="Facebook">FB</a>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════
+     COOKIE BANNER
+══════════════════════════════════════ -->
+<div id="cookie-banner" role="dialog" aria-label="Cookie-Einstellungen">
+  <p class="cookie-text">
+    Diese Website verwendet Cookies, um das Nutzungserlebnis zu verbessern. Mit dem Klick auf „Akzeptieren" stimmst du der Verwendung zu.
+    <a href="#">Datenschutz&shy;erklärung</a>
+  </p>
+  <div class="cookie-btns">
+    <button class="btn-cookie-reject" id="cookieReject">Ablehnen</button>
+    <button class="btn-cookie-accept" id="cookieAccept">Akzeptieren</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+  // ── Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ── Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  // ── Portfolio filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      portfolioItems.forEach(item => {
+        if (filter === 'all' || item.dataset.category === filter) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // ── Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ── Cookie banner
+  const banner = document.getElementById('cookie-banner');
+  const accepted = localStorage.getItem('cookieConsent');
+  if (accepted) banner.classList.add('hidden');
+
+  document.getElementById('cookieAccept').addEventListener('click', () => {
+    localStorage.setItem('cookieConsent', 'accepted');
+    banner.classList.add('hidden');
+  });
+  document.getElementById('cookieReject').addEventListener('click', () => {
+    localStorage.setItem('cookieConsent', 'rejected');
+    banner.classList.add('hidden');
+  });
+
+  // ── Form placeholder handler
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    alert('Platzhalter: Formular noch nicht verbunden. Hier kommt später die E-Mail-Integration.');
+  }
+</script>
+
+</body>
+</html>

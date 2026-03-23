@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio – Oli's Lichtblicke</title>
+  <meta name="description" content="Portfolio von Oliver – Portrait, Landschaft, Events und Street Photography aus Essen." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:    '#F7F4EF',
+            stone:    '#E8E2D9',
+            sand:     '#C4A882',
+            charcoal: '#1C1C1C',
+            muted:    '#7A7570',
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'serif'],
+            body:    ['"DM Sans"', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: #F7F4EF;
+      color: #1C1C1C;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── Placeholder images ── */
+    .ph {
+      background: linear-gradient(135deg, #E8E2D9 0%, #D5CCBF 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #A09890;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(247, 244, 239, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s ease, padding 0.4s ease;
+    }
+    nav.scrolled {
+      border-bottom-color: #E8E2D9;
+      padding: 1rem 2.5rem;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: #1C1C1C;
+      text-decoration: none;
+    }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #1C1C1C;
+      text-decoration: none;
+      margin-left: 2rem;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-links a.active { opacity: 1; border-bottom: 1px solid #C4A882; padding-bottom: 1px; }
+
+    /* ── Mobile menu ── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 1px; background: #1C1C1C; display: block; transition: all 0.3s; }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #F7F4EF;
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      text-decoration: none;
+      color: #1C1C1C;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    .mobile-menu a:hover { opacity: 1; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ── Page Hero ── */
+    .page-hero {
+      padding: 10rem 2.5rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .page-hero-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #C4A882;
+      margin-bottom: 0.75rem;
+    }
+    .page-hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 300;
+      line-height: 0.95;
+      color: #1C1C1C;
+      margin-bottom: 2rem;
+    }
+    .page-hero-desc {
+      font-size: 0.95rem;
+      color: #7A7570;
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+    }
+    .page-hero-divider {
+      width: 100%;
+      height: 1px;
+      background: #E8E2D9;
+    }
+
+    /* ── Filter bar ── */
+    .filter-section {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem 2.5rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .filter-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #A09890;
+      margin-right: 0.5rem;
+    }
+    .filter-btn {
+      padding: 0.45rem 1.1rem;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid #D5CCBF;
+      background: transparent;
+      color: #7A7570;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: #1C1C1C; color: #1C1C1C; }
+    .filter-btn.active { background: #1C1C1C; color: #F7F4EF; border-color: #1C1C1C; }
+
+    /* ── Masonry grid ── */
+    .portfolio-section {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2.5rem 6rem;
+    }
+    .masonry-grid {
+      columns: 3;
+      gap: 1rem;
+    }
+    .portfolio-item {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .portfolio-item .ph {
+      width: 100%;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .portfolio-item:hover .ph { transform: scale(1.04); }
+    .portfolio-item .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(28,28,28,0);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 1.25rem;
+      transition: background 0.35s;
+    }
+    .portfolio-item:hover .overlay { background: rgba(28,28,28,0.5); }
+    .overlay-cat {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #C4A882;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s;
+    }
+    .overlay-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #F7F4EF;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s 0.05s;
+    }
+    .overlay-hint {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(247,244,239,0.5);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s 0.1s;
+      margin-top: 0.25rem;
+    }
+    .portfolio-item:hover .overlay-cat,
+    .portfolio-item:hover .overlay-title,
+    .portfolio-item:hover .overlay-hint { opacity: 1; transform: translateY(0); }
+    .portfolio-item.hidden { display: none; }
+
+    @media (max-width: 900px)  { .masonry-grid { columns: 2; } }
+    @media (max-width: 550px)  { .masonry-grid { columns: 1; } }
+
+    /* ── Count badge ── */
+    .count-bar {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2.5rem 1.5rem;
+      font-size: 0.78rem;
+      color: #A09890;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── CTA section ── */
+    .cta-section {
+      background: #1C1C1C;
+      padding: 6rem 2.5rem;
+      text-align: center;
+    }
+    .cta-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #C4A882;
+      margin-bottom: 1rem;
+    }
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      color: #F7F4EF;
+      margin-bottom: 0.75rem;
+      line-height: 1.15;
+    }
+    .cta-sub {
+      font-size: 0.9rem;
+      color: #7A7570;
+      margin-bottom: 2.5rem;
+    }
+    .btn-primary {
+      display: inline-block;
+      padding: 0.85rem 2rem;
+      background: #C4A882;
+      color: #1C1C1C;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .btn-primary:hover { background: #F7F4EF; transform: translateY(-1px); }
+
+    /* ── Footer ── */
+    footer {
+      background: #1C1C1C;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #F7F4EF;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+    .footer-copy { font-size: 0.75rem; color: #6B6560; }
+    .footer-social { display: flex; gap: 1rem; }
+    .footer-social a {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: #A09890;
+      text-decoration: none;
+      font-size: 0.75rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .footer-social a:hover { border-color: #C4A882; color: #C4A882; }
+
+    /* ── Cookie Banner ── */
+    #cookie-banner {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #1C1C1C;
+      color: #F7F4EF;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      z-index: 999;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.4s ease;
+    }
+    #cookie-banner.hidden { transform: translateY(110%); }
+    .cookie-text { font-size: 0.85rem; color: #A09890; max-width: 600px; line-height: 1.5; }
+    .cookie-text a { color: #C4A882; text-decoration: none; }
+    .cookie-btns { display: flex; gap: 0.75rem; flex-shrink: 0; }
+    .btn-cookie-accept {
+      padding: 0.6rem 1.4rem;
+      background: #C4A882;
+      color: #1C1C1C;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-cookie-accept:hover { background: #F7F4EF; }
+    .btn-cookie-reject {
+      padding: 0.6rem 1.4rem;
+      background: transparent;
+      color: #7A7570;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.15);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-cookie-reject:hover { border-color: #7A7570; color: #A09890; }
+
+    /* ── Lightbox ── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(18, 16, 14, 0.96);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    #lightbox.open { display: flex; }
+    .lb-inner {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lb-img {
+      max-width: 80vw;
+      max-height: 82vh;
+      object-fit: contain;
+    }
+    /* Lightbox placeholder */
+    .lb-placeholder {
+      background: linear-gradient(135deg, #2A2620 0%, #1C1A17 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: #6B6560;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .lb-close {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #F7F4EF;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      z-index: 201;
+    }
+    .lb-close:hover { background: rgba(255,255,255,0.15); }
+    .lb-arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #F7F4EF;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      z-index: 201;
+      user-select: none;
+    }
+    .lb-arrow:hover { background: rgba(255,255,255,0.14); }
+    .lb-prev { left: 1.5rem; }
+    .lb-next { right: 1.5rem; }
+    .lb-meta {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 201;
+    }
+    .lb-meta-cat {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #C4A882;
+      margin-bottom: 0.25rem;
+    }
+    .lb-meta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #F7F4EF;
+    }
+    .lb-counter {
+      font-size: 0.7rem;
+      color: #6B6560;
+      margin-top: 0.35rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     NAVIGATION
+══════════════════════════════════════ -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="Context/brand/logovektorOhneRand.png" alt="Oli's Lichtblicke" style="height:80px; width:auto;" />
+  </a>
+  <div class="nav-links">
+    <a href="portfolio.html" class="active">Portfolio</a>
+    <a href="blog.html">Blog</a>
+    <a href="ueber-mich.html">Über mich</a>
+    <a href="kontakt.html">Kontakt</a>
+  </div>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="portfolio.html" class="mobile-link">Portfolio</a>
+  <a href="blog.html"      class="mobile-link">Blog</a>
+  <a href="ueber-mich.html" class="mobile-link">Über mich</a>
+  <a href="kontakt.html"   class="mobile-link">Kontakt</a>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PAGE HERO
+══════════════════════════════════════ -->
+<header class="page-hero reveal">
+  <p class="page-hero-label">Meine Arbeit</p>
+  <h1 class="page-hero-title">Portfolio</h1>
+  <p class="page-hero-desc">
+    Platzhaltertext – eine kurze Beschreibung deiner fotografischen Arbeit und was dich antreibt. Was macht deine Bilder besonders?
+  </p>
+  <div class="page-hero-divider"></div>
+</header>
+
+
+<!-- ══════════════════════════════════════
+     FILTER BAR
+══════════════════════════════════════ -->
+<div class="filter-section reveal">
+  <span class="filter-label">Filtern:</span>
+  <button class="filter-btn active" data-filter="all">Alle</button>
+  <button class="filter-btn" data-filter="portrait">Portrait</button>
+  <button class="filter-btn" data-filter="landschaft">Landschaft</button>
+  <button class="filter-btn" data-filter="events">Events</button>
+  <button class="filter-btn" data-filter="street">Street</button>
+</div>
+
+<div class="count-bar" id="countBar">12 Bilder</div>
+
+
+<!-- ══════════════════════════════════════
+     MASONRY GRID
+══════════════════════════════════════ -->
+<div class="portfolio-section">
+  <div class="masonry-grid" id="masonryGrid">
+
+    <!-- 1 -->
+    <div class="portfolio-item reveal" data-category="portrait" data-title="Stille Momente" data-index="0">
+      <img src="Context/images/_DSC2618.jpg" alt="Eisbär" style="width:100%; aspect-ratio:2/3; object-fit:cover;" />
+      <div class="overlay">
+        <span class="overlay-cat">Portrait</span>
+        <span class="overlay-title">Stille Momente</span>
+        <span class="overlay-hint">Klicken zum Vergrößern</span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="portfolio-item reveal" data-category="landschaft" data-title="Weite Horizonte" data-index="1">
+      <img src="Context/images/_DSC2736.jpg" alt="Tiger" style="width:100%; aspect-ratio:3/2; object-fit:cover;" />
+      <div class="overlay">
+        <span class="overlay-cat">Landschaft</span>
+        <span class="overlay-title">Weite Horizonte</span>
+        <span class="overlay-hint">Klicken zum Vergrößern</span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="portfolio-item reveal" data-category="street" data-title="Stadtleben" data-index="2">
+      <img src="Context/images/_DSC2758.jpg" alt="Roter Panda" style="width:100%; aspect-ratio:1/1; object-fit:cover;" />
+      <div class="overlay">
+        <span class="overlay-cat">Street</span>
+        <span class="overlay-title">Stadtleben</span>
+        <span class="overlay-hint">Klicken zum Vergrößern</span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="portfolio-item reveal" data-category="events" data-title="Besondere Abende" data-index="3">
+      <img src="Context/images/_DSC2839.jpg" alt="Eichhörnchen" style="width:100%; aspect-ratio:3/2; object-fit:cover;" />
+      <div class="overlay">
+        <span class="overlay-cat">Events</span>
+        <span class="overlay-title">Besondere Abende</span>
+        <span class="overlay-hint">Klicken zum Vergrößern</span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="portfolio-item reveal" data-category="portrait" data-title="Natürliches Licht" data-index="4">
+      <img src="Context/images/_DSC2871.jpg" alt="Grünspecht" style="width:100%; aspect-ratio:3/4; object-fit:cover;" />
+      <div class="overlay">
+        <span class="overlay-cat">Portrait</span>
+        <span class="overlay-title">Natürliches Licht</span>
+        <span class="overlay-hint">Klicken zum Vergrößern</span>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="portfolio-item reveal" data-category="landschaft" data-title="Goldene Stunde" data-index="5">
+      <div class="ph" style="aspect-ratio:16/9;">Landschaft · 02</div>
+      <div class="overlay">
+        <span class="overlay-cat">Landschaft</span>
+        <span class="overlay-title">Goldene Stunde</span>
+        <span class="overlay-hint">Klicken zum Vergrößern</span>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="portfolio-item reveal" data-category="street" data-title="Zwischen den Zeilen" data-index="6">
+      <div class="ph" style="aspect-ratio:2/3;">Street · 02</div>
+      <div class="overlay">
+        <span class="overlay-cat">Street</span>
+        <span class="overlay-title">Zwischen den Zeilen</span>
+        <span class="overlay-hint">Klicken zum Vergrößern</span>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="portfolio-item reveal" data-category="events" data-title="Im Rampenlicht" data-index="7">
+      <div class="ph" style="aspect-ratio:4/5;">Events · 02</div>
+      <div class="overlay">
+        <span class="overlay-cat">Events</span>
+        <span class="overlay-title">Im Rampenlicht</span>
+        <span class="overlay-hint">Klicken zum Vergrößern</span>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="portfolio-item reveal" data-category="portrait" data-title="Charakterköpfe" data-index="8">
+      <div class="ph" style="aspect-ratio:1/1;">Portrait · 03</div>
+      <div class="overlay">
+        <span class="overlay-cat">Portrait</span>
+        <span class="overlay-title">Charakterköpfe</span>
+        <span class="overlay-hint">Klicken zum Vergrößern</span>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="portfolio-item reveal" data-category="landschaft" data-title="Nebel und Stille" data-index="9">
+      <div class="ph" style="aspect-ratio:3/2;">Landschaft · 03</div>
+      <div class="overlay">
+        <span class="overlay-cat">Landschaft</span>
+        <span class="overlay-title">Nebel und Stille</span>
+        <span class="overlay-hint">Klicken zum Vergrößern</span>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="portfolio-item reveal" data-category="street" data-title="Grauer Morgen" data-index="10">
+      <div class="ph" style="aspect-ratio:4/3;">Street · 03</div>
+      <div class="overlay">
+        <span class="overlay-cat">Street</span>
+        <span class="overlay-title">Grauer Morgen</span>
+        <span class="overlay-hint">Klicken zum Vergrößern</span>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="portfolio-item reveal" data-category="events" data-title="Feierliche Stunden" data-index="11">
+      <div class="ph" style="aspect-ratio:16/9;">Events · 03</div>
+      <div class="overlay">
+        <span class="overlay-cat">Events</span>
+        <span class="overlay-title">Feierliche Stunden</span>
+        <span class="overlay-hint">Klicken zum Vergrößern</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     CTA SECTION
+══════════════════════════════════════ -->
+<section class="cta-section reveal">
+  <p class="cta-label">Zusammenarbeit</p>
+  <h2 class="cta-title">Interesse an einer<br>Zusammenarbeit?</h2>
+  <p class="cta-sub">Lass uns gemeinsam Momente festhalten, die bleiben.</p>
+  <a href="kontakt.html" class="btn-primary">Kontakt aufnehmen</a>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer>
+  <a href="index.html" style="display:inline-block;">
+    <img src="Context/brand/logovektorOhneRand.png" alt="Oli's Lichtblicke" style="height:32px; width:auto; filter:invert(1);" />
+  </a>
+  <div class="footer-copy">© 2026 Oliver · olislichtblicke.de</div>
+  <div class="footer-social">
+    <a href="#" aria-label="Instagram">IG</a>
+    <a href="#" aria-label="Facebook">FB</a>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════
+     LIGHTBOX
+══════════════════════════════════════ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Bildansicht">
+  <button class="lb-close" id="lbClose" aria-label="Schließen">✕</button>
+  <button class="lb-arrow lb-prev" id="lbPrev" aria-label="Vorheriges Bild">←</button>
+  <div class="lb-inner">
+    <div class="lb-placeholder lb-img" id="lbPlaceholder" style="width:70vw; max-width:900px; height:70vh;"></div>
+  </div>
+  <button class="lb-arrow lb-next" id="lbNext" aria-label="Nächstes Bild">→</button>
+  <div class="lb-meta">
+    <div class="lb-meta-cat" id="lbCat"></div>
+    <div class="lb-meta-title" id="lbTitle"></div>
+    <div class="lb-counter" id="lbCounter"></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     COOKIE BANNER
+══════════════════════════════════════ -->
+<div id="cookie-banner" role="dialog" aria-label="Cookie-Einstellungen">
+  <p class="cookie-text">
+    Diese Website verwendet Cookies, um das Nutzungserlebnis zu verbessern.
+    <a href="#">Datenschutzerklärung</a>
+  </p>
+  <div class="cookie-btns">
+    <button class="btn-cookie-reject" id="cookieReject">Ablehnen</button>
+    <button class="btn-cookie-accept" id="cookieAccept">Akzeptieren</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
+<script>
+  // ── Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ── Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+  // ── Portfolio data (mirrors DOM items)
+  const allItems = Array.from(document.querySelectorAll('.portfolio-item'));
+  const itemData = allItems.map(el => ({
+    el,
+    category: el.dataset.category,
+    title:    el.dataset.title,
+  }));
+
+  // ── Filter
+  let activeFilter = 'all';
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const countBar   = document.getElementById('countBar');
+
+  function applyFilter(filter) {
+    activeFilter = filter;
+    filterBtns.forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
+    let visible = 0;
+    itemData.forEach(({ el, category }) => {
+      const show = filter === 'all' || category === filter;
+      el.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+    countBar.textContent = `${visible} Bild${visible !== 1 ? 'er' : ''}`;
+  }
+
+  filterBtns.forEach(btn => btn.addEventListener('click', () => applyFilter(btn.dataset.filter)));
+
+  // ── Lightbox
+  const lightbox   = document.getElementById('lightbox');
+  const lbClose    = document.getElementById('lbClose');
+  const lbPrev     = document.getElementById('lbPrev');
+  const lbNext     = document.getElementById('lbNext');
+  const lbTitle    = document.getElementById('lbTitle');
+  const lbCat      = document.getElementById('lbCat');
+  const lbCounter  = document.getElementById('lbCounter');
+  const lbPlaceholder = document.getElementById('lbPlaceholder');
+
+  let currentIndex = 0;
+
+  function getVisibleItems() {
+    return itemData.filter(({ el }) => !el.classList.contains('hidden'));
+  }
+
+  function openLightbox(index) {
+    const visible = getVisibleItems();
+    if (!visible.length) return;
+    currentIndex = index;
+    const item = visible[currentIndex];
+    lbTitle.textContent   = item.title;
+    lbCat.textContent     = item.category.charAt(0).toUpperCase() + item.category.slice(1);
+    lbCounter.textContent = `${currentIndex + 1} / ${visible.length}`;
+    lbPlaceholder.textContent = `${item.category} · Platzhalterbild`;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function navigate(dir) {
+    const visible = getVisibleItems();
+    currentIndex = (currentIndex + dir + visible.length) % visible.length;
+    openLightbox(currentIndex);
+  }
+
+  // Attach click to items
+  allItems.forEach((el, i) => {
+    el.addEventListener('click', () => {
+      const visible = getVisibleItems();
+      const visibleIndex = visible.findIndex(v => v.el === el);
+      if (visibleIndex !== -1) openLightbox(visibleIndex);
+    });
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lbPrev.addEventListener('click', () => navigate(-1));
+  lbNext.addEventListener('click', () => navigate(1));
+
+  // Click outside
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  navigate(-1);
+    if (e.key === 'ArrowRight') navigate(1);
+  });
+
+  // ── Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ── Cookie banner
+  const banner = document.getElementById('cookie-banner');
+  if (localStorage.getItem('cookieConsent')) banner.classList.add('hidden');
+  document.getElementById('cookieAccept').addEventListener('click', () => {
+    localStorage.setItem('cookieConsent', 'accepted');
+    banner.classList.add('hidden');
+  });
+  document.getElementById('cookieReject').addEventListener('click', () => {
+    localStorage.setItem('cookieConsent', 'rejected');
+    banner.classList.add('hidden');
+  });
+</script>
+
+</body>
+</html>
