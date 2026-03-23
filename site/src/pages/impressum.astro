@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+---
+
+<BaseLayout title="Impressum" description="Impressum von Olis Lichtblicke – Oliver Stephan, Fotograf aus Essen.">
+
+  <div style="padding-top:5rem;">
+    <section class="section">
+      <div class="section-inner">
+        <div class="reveal">
+          <p class="section-label">Rechtliches</p>
+          <h1 class="section-title">Impressum</h1>
+        </div>
+        <div class="legal-body reveal">
+          <p><em>Wird in Kürze ergänzt.</em></p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</BaseLayout>
+
+<style>
+.legal-body {
+  max-width: 680px;
+  margin-top: 2rem;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--charcoal);
+}
+.legal-body p { margin-bottom: 1.25rem; }
+</style>

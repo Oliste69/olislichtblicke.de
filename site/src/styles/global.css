@@ -463,6 +463,17 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.04em;
 }
 .footer-copy { font-size: 0.75rem; color: var(--dimmed); }
+.footer-legal {
+  display: flex;
+  gap: 1.5rem;
+}
+.footer-legal a {
+  font-size: 0.75rem;
+  color: var(--dimmed);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-legal a:hover { color: var(--sand); }
 
 /* ── Cookie Banner ── */
 .cookie-banner {
